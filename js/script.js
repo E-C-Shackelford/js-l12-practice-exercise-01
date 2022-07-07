@@ -1,7 +1,10 @@
 const randomFolks = document.querySelector(".random-peeps");
+const selectUserNumber = document.querySelector("#users");
 
-const getData = async function () {
-  const usersRequest = await fetch("https://randomuser.me/api?results=5");
+const getData = async function (numUsers) {
+  const usersRequest = await fetch(
+    `https://randomuser.me/api?results=${numUsers}`
+  );
   const data = await usersRequest.json();
   // console.log(data);
   /* 
@@ -14,7 +17,7 @@ const getData = async function () {
 
   displayUsers(userResults);
 };
-getData();
+getData(1);
 
 const displayUsers = function (userResults) {
   // empty randomFolks element’s contents to make sure there aren't any duplicated DOM elements
@@ -31,3 +34,11 @@ const displayUsers = function (userResults) {
     randomFolks.append(userDiv);
   }
 };
+
+selectUserNumber.addEventListener("change", function (e) {
+  // create a variable that will capture the selected value
+  const numUsers = e.target.value;
+  getData(numUsers);
+});
+// after adding this change event listener for selectUserNumber and then creating a numUsers variable that captures the selected value, followed by calling the getData function inside the callback function, you then need to modify the getData() function so it accepts numUsers as a parameter, and then in the fetch() request edit the API URL to use the results of the numUsers
+// an argument for the first call to the getData() function needs to now be provided
